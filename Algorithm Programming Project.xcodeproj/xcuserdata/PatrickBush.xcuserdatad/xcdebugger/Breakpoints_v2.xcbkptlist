@@ -14,9 +14,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "292"
-            endingLineNumber = "292"
-            landmarkName = "runInputsAlgorithm3(vector&lt;int&gt; testArray, int k, float m, RunningTime *t)"
-            landmarkType = "7">
+            endingLineNumber = "292">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -47,7 +45,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "353"
             endingLineNumber = "353"
-            landmarkName = "generateOrderedArray(int size)"
+            landmarkName = "generateDistinctArray(int size)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -63,7 +61,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "368"
             endingLineNumber = "368"
-            landmarkName = "selectKAlgorithm1(vector&lt;int&gt; distinctNumbers, int k)"
+            landmarkName = "generateOrderedArrayReverse(int size)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -79,7 +77,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "350"
             endingLineNumber = "350"
-            landmarkName = "generateOrderedArray(int size)"
+            landmarkName = "generateDistinctArray(int size)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,7 +93,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "354"
             endingLineNumber = "354"
-            landmarkName = "generateOrderedArray(int size)"
+            landmarkName = "generateDistinctArray(int size)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -143,7 +141,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "403"
             endingLineNumber = "403"
-            landmarkName = "selectKAlgorithm3(vector&lt;int&gt; numbers, int k)"
+            landmarkName = "selectKAlgorithm2(vector&lt;int&gt; numbers, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -159,7 +157,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "405"
             endingLineNumber = "405"
-            landmarkName = "selectKAlgorithm3(vector&lt;int&gt; numbers, int k)"
+            landmarkName = "selectKAlgorithm2(vector&lt;int&gt; numbers, int k)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -174,9 +172,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "407"
-            endingLineNumber = "407"
-            landmarkName = "selectKAlgorithm3(vector&lt;int&gt; numbers, int k)"
-            landmarkType = "7">
+            endingLineNumber = "407">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -191,7 +187,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "274"
             endingLineNumber = "274"
-            landmarkName = "runInputsAlgorithm2(vector&lt;int&gt; testArray, int k, float m, RunningTime *t)"
+            landmarkName = "runInputsAlgorithm1(vector&lt;int&gt; testArray, int k, float m, RunningTime *t)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -223,7 +219,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "258"
             endingLineNumber = "258"
-            landmarkName = "runInputsAlgorithm1(vector&lt;int&gt; testArray, int k, float m, RunningTime *t)"
+            landmarkName = "calculateAverageTime(vector&lt;RunningTime *&gt; runningTimes)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,9 +250,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "372"
-            endingLineNumber = "372"
-            landmarkName = "selectKAlgorithm1(vector&lt;int&gt; distinctNumbers, int k)"
-            landmarkType = "7">
+            endingLineNumber = "372">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -270,9 +264,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "371"
-            endingLineNumber = "371"
-            landmarkName = "selectKAlgorithm1(vector&lt;int&gt; distinctNumbers, int k)"
-            landmarkType = "7">
+            endingLineNumber = "371">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -339,9 +331,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "writeAveragesToFile(vector&lt;AverageTime&gt; averages)"
-            landmarkType = "7">
+            endingLineNumber = "231">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -356,7 +346,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "226"
             endingLineNumber = "226"
-            landmarkName = "writeAveragesToFile(vector&lt;AverageTime&gt; averages)"
+            landmarkName = "main(int argc, const char * argv[])"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
