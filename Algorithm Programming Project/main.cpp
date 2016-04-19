@@ -10,9 +10,10 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#include <chrono>
 using namespace std;
 
-#define DEFAULT_M 100000
+#define DEFAULT_M 1000
 
 /**
  @param distinctNumbers array of distinct integers of size n
@@ -85,16 +86,24 @@ vector<int> generateRandomArray(int size);
  */
 vector<int> generateDistinctArray(int size);
 
-
+/**
+ *  <#Description#>
+ *
+ *  @param size <#size description#>
+ *
+ *  @return <#return value description#>
+ */
 vector<int> generateOrderedArray(int size);
 
 vector<int> generateOrderedArrayReverse(int size);
 
+void testWrite();
 
 struct RunningTime {
-    time_t startTime;
-    time_t endTime;
-    double runningTime = 0;
+    std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
+    std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
+    std::chrono::nanoseconds runningTime;
+    float duration;
 };
 
 struct AverageTime {
@@ -216,7 +225,7 @@ int main(int argc, const char * argv[]) {
     
     runningTimes.clear();
     writeAveragesToFile(averageTimes);
-    
+    //testWrite();
     return 0;
 }
 
@@ -224,33 +233,19 @@ void writeAveragesToFile(vector<AverageTime> averages) {
     ofstream myFile;
     myFile.open("ProgrammingProject-pmb-Bush.txt");
     if (myFile.is_open()) {
-        int i = 0;
-        while (i <= averages.size()) {
-            switch (i) {
-                case 0:
-                    myFile << std::fixed << std::setprecision(20) << averages[i].averageTime;
-                    break;
-                case 19:
-                    myFile << std::fixed << std::setprecision(20) << averages[i].averageTime;
-                    break;
-                case 37:
-                    myFile << std::fixed << std::setprecision(20) << averages[i].averageTime;
-                    break;
-                case 56:
-                    myFile << std::fixed << std::setprecision(20) << averages[i].averageTime;
-                    break;
-                default:
-                    myFile << std::fixed << std::setprecision(20) << ", " << averages[i].averageTime;
-                    break;
-            }
+        myFile << std::fixed << std::setprecision(5) << averages[0].averageTime;
+        int i = 1;
+        for (; i < 75; i++) {
             if (i % 19 == 0) {
-                myFile << "\n";
+                myFile << "\n" << std::fixed << std::setprecision(5) << averages[i].averageTime;
+                continue;
             }
-            i++;
+            myFile << std::fixed << std::setprecision(5) << ", " << averages[i].averageTime;
         }
+        myFile << std::fixed << std::setprecision(5) << ", " << averages[75].averageTime;
     }
     myFile.close();
-    
+
 }
 
 
@@ -258,7 +253,7 @@ AverageTime calculateAverageTime(vector<RunningTime *> runningTimes) {
     AverageTime averageTime;
     double average = 0;
     for (int i = 0; i < runningTimes.size(); i++) {
-        average += runningTimes[i]->runningTime;
+        average += runningTimes[i]->duration;
     }
     average = average / runningTimes.size();
     averageTime.averageTime = average;
@@ -266,47 +261,46 @@ AverageTime calculateAverageTime(vector<RunningTime *> runningTimes) {
 }
 
 void runInputsAlgorithm1(vector<int> testArray, int k, float m, RunningTime *t) {
-    t->startTime = time(0);
+    t->startTime = std::chrono::high_resolution_clock::now();
     for (int j = 0; j < m; j++) {
         selectKAlgorithm1(testArray, k);
     }
-    t->endTime = time(0);
-    double times = difftime(t->endTime, t->startTime);
-    if (times == 0) {
+    t->endTime = std::chrono::high_resolution_clock::now();
+    t->runningTime = std::chrono::duration_cast<std::chrono::nanoseconds>(t->endTime - t->startTime);
+    if (t->runningTime.count() == 0) {
         runInputsAlgorithm1(testArray, k, m * 2, t);
     } else {
-        t->runningTime = times / m;
+        t->duration = t->runningTime.count() / m;
         return;
     }
 }
 
 void runInputsAlgorithm2(vector<int> testArray, int k, float m, RunningTime *t) {
-    t->startTime = time(0);
+    t->startTime = std::chrono::high_resolution_clock::now();
     for (int j = 0; j < DEFAULT_M; j++) {
         selectKAlgorithm2(testArray, k);
     }
-    t->endTime = time(0);
-    double times = difftime(t->endTime, t->startTime);
-    if (times == 0) {
+    t->endTime = std::chrono::high_resolution_clock::now();
+    t->runningTime = std::chrono::duration_cast<std::chrono::nanoseconds>(t->endTime - t->startTime);
+    if (t->runningTime.count() == 0) {
         runInputsAlgorithm2(testArray, k, m * 2, t);
     } else {
-        t->runningTime = times / m;
+        t->duration = t->runningTime.count() / m;
         return;
     }
 }
 
 void runInputsAlgorithm3(vector<int> testArray, int k, float m, RunningTime *t) {
-    t->startTime = time(0);
+    t->startTime = std::chrono::high_resolution_clock::now();
     for (int j = 0; j < DEFAULT_M; j++) {
         selectKAlgorithm3(testArray, k);
     }
-    t->endTime = time(0);
-    double times = difftime(t->endTime, t->startTime);
-
-    if (times == 0) {
+    t->endTime = std::chrono::high_resolution_clock::now();
+    t->runningTime = std::chrono::duration_cast<std::chrono::nanoseconds>(t->endTime - t->startTime);
+    if (t->runningTime.count() == 0) {
         runInputsAlgorithm3(testArray, k, m * 2, t);
     } else {
-        t->runningTime = times / m;
+        t->duration = t->runningTime.count() / m;
         return;
     }
 }
@@ -314,16 +308,16 @@ void runInputsAlgorithm3(vector<int> testArray, int k, float m, RunningTime *t) 
 void runInputsAlgorithm4(vector<int> testArray, int k, float m, RunningTime *t) {
     int right = testArray.size() - 1;
     int left = 0;
-    t->startTime = time(0);
+    t->startTime = std::chrono::high_resolution_clock::now();
     for (int j = 0; j < DEFAULT_M; j++) {
         selectKAlgorithm4(testArray, left, right, k);
     }
-    t->endTime = time(0);
-    double times = difftime(t->endTime, t->startTime);
-    if (times == 0) {
+    t->endTime = std::chrono::high_resolution_clock::now();
+    t->runningTime = std::chrono::duration_cast<std::chrono::nanoseconds>(t->endTime - t->startTime);
+    if (t->runningTime.count() == 0) {
         runInputsAlgorithm4(testArray, k, m * 2, t);
     } else {
-        t->runningTime = times / m;
+        t->duration = t->runningTime.count() / m;
         return;
     }
 }
@@ -473,5 +467,15 @@ int rangeRandomAlg (int min, int max){
         x = rand();
     } while (x >= RAND_MAX - remainder);
     return min + x % n;
+}
+
+void testWrite() {
+    vector<AverageTime> test = vector<AverageTime>(76);
+    for (int i = 0; i < 76; i++) {
+        AverageTime t;
+        t.averageTime = i;
+        test[i] = t;
+    }
+    writeAveragesToFile(test);
 }
 
