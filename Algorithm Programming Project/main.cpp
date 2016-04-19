@@ -86,7 +86,13 @@ vector<int> generateRandomArray(int size);
  */
 vector<int> generateDistinctArray(int size);
 
-
+/**
+ *  <#Description#>
+ *
+ *  @param size <#size description#>
+ *
+ *  @return <#return value description#>
+ */
 vector<int> generateOrderedArray(int size);
 
 vector<int> generateOrderedArrayReverse(int size);
