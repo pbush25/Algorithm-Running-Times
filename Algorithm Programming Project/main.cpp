@@ -10,6 +10,7 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 #include <chrono>
 using namespace std;
 
@@ -78,27 +79,31 @@ int rangeRandomAlg (int min, int max);
 vector<int> generateRandomArray(int size);
 
 /**
- *  A method that will generate an array from 1 - n
+ *  A method tht will generate an ordered array of a certain size
  *
- *  @param size the size of the array to create
+ *  @param size size the size of the array to create
  *
- *  @return an array with distinct values
- */
-vector<int> generateDistinctArray(int size);
-
-/**
- *  <#Description#>
- *
- *  @param size <#size description#>
- *
- *  @return <#return value description#>
+ *  @return an array of size in order of 1 -n
  */
 vector<int> generateOrderedArray(int size);
 
+/**
+ *  A method that will generate an ordered array in reverse.
+ *
+ *  @param size the size of the array to create
+ *
+ *  @return An array for size from n -> 1
+ */
 vector<int> generateOrderedArrayReverse(int size);
 
+/**
+ *  A test function for writing to the file.
+ */
 void testWrite();
 
+/**
+ *  A struct representing the Running times of a given algorithm. It includes it's start time, end time, and differences in running time.
+ */
 struct RunningTime {
     std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
     std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
@@ -106,24 +111,67 @@ struct RunningTime {
     float duration;
 };
 
+/**
+ *  A struct representing the average times for each algorithm
+ */
 struct AverageTime {
     double averageTime;
 };
 
-typedef struct {
-    vector<int> testArray;
-    int k;
-    int m;
-    RunningTime *t;
-} thread_args_t;
-
+/**
+ *  This function can be called to run the given inputs on Alogrithm 1.
+ *
+ *  @param testArray an array of size N for the input
+ *  @param k         the kth value
+ *  @param m         the number of loop executions
+ *  @param t         a RunningTime to keep track of how long it takes an algorithm to run
+ */
 void runInputsAlgorithm1(vector<int> testArray, int k, float m, RunningTime *t);
+
+/**
+ *  This function can be called to run the given inputs on Alogrithm 2.
+ *
+ *  @param testArray an array of size N for the input
+ *  @param k         the kth value
+ *  @param m         the number of loop executions
+ *  @param t         a RunningTime to keep track of how long it takes an algorithm to run
+ */
 void runInputsAlgorithm2(vector<int> testArray, int k, float m, RunningTime *t);
+
+/**
+ *  This function can be called to run the given inputs on Alogrithm 3.
+ *
+ *  @param testArray an array of size N for the input
+ *  @param k         the kth value
+ *  @param m         the number of loop executions
+ *  @param t         a RunningTime to keep track of how long it takes an algorithm to run
+ */
 void runInputsAlgorithm3(vector<int> testArray, int k, float m, RunningTime *t);
+
+/**
+ *  This function can be called to run the given inputs on Alogrithm 4.
+ *
+ *  @param testArray an array of size N for the input
+ *  @param k         the kth value
+ *  @param m         the number of loop executions
+ *  @param t         a RunningTime to keep track of how long it takes an algorithm to run
+ */
 void runInputsAlgorithm4(vector<int> testArray, int k, float m, RunningTime *t);
 
+/**
+ *  This function will be called after each run of an algorithm to calculate the runtime for the given input
+ *
+ *  @param runningTimes All of the running times for a given input size of N
+ *
+ *  @return A struct of Average Times
+ */
 AverageTime calculateAverageTime(vector<RunningTime*> runningTimes);
 
+/**
+ *  A function that will write all the averages to the file after execution.
+ *
+ *  @param averages All of the averages that need to be written
+ */
 void writeAveragesToFile(vector<AverageTime> averages);
 
 
@@ -140,7 +188,10 @@ int main(int argc, const char * argv[]) {
     averageTimes.reserve(19);
     
 
-    //Algorithm 1
+    //Algorithm 1 - Run all of the inputs on Algorithm 1
+    //For each run, generate an ordered array of size N, a reversed array of size N
+    //and ten random arrays of size N.
+    //After each run, calculate the averages for the run, and add the averages to the file
     for (int i = 0; i < sizeOfN.size(); i++) {
         vector<int> sortedArray = generateOrderedArray(sizeOfN[i]);
         RunningTime *t = new RunningTime;
@@ -149,16 +200,17 @@ int main(int argc, const char * argv[]) {
         RunningTime *t2 = new RunningTime;
         vector<int> reverseArray = generateOrderedArrayReverse(sizeOfN[i]);
         runInputsAlgorithm1(reverseArray, k, DEFAULT_M, t2);
-        runningTimes.push_back(t);
+        runningTimes.push_back(t2);
         for (int j = 0; j < 10; j++) {
             RunningTime *t3 = new RunningTime;
             vector<int> random = generateRandomArray(sizeOfN[i]);
             runInputsAlgorithm1(random, k, DEFAULT_M, t3);
-            runningTimes.push_back(t);
+            runningTimes.push_back(t3);
         }
         averageTimes.push_back(calculateAverageTime(runningTimes));
     }
     
+    //clear the running times to manage memory
     runningTimes.clear();
     //writeAveragesToFile(averageTimes);
     
@@ -171,12 +223,12 @@ int main(int argc, const char * argv[]) {
         RunningTime *t2 = new RunningTime;
         vector<int> reverseArray = generateOrderedArrayReverse(sizeOfN[i]);
         runInputsAlgorithm2(reverseArray, k, DEFAULT_M, t2);
-        runningTimes.push_back(t);
+        runningTimes.push_back(t2);
         for (int j = 0; j < 10; j++) {
             RunningTime *t3 = new RunningTime;
             vector<int> random = generateRandomArray(sizeOfN[i]);
             runInputsAlgorithm2(random, k, DEFAULT_M, t3);
-            runningTimes.push_back(t);
+            runningTimes.push_back(t3);
         }
         averageTimes.push_back(calculateAverageTime(runningTimes));
     }
@@ -192,12 +244,12 @@ int main(int argc, const char * argv[]) {
         RunningTime *t2 = new RunningTime;
         vector<int> reverseArray = generateOrderedArrayReverse(sizeOfN[i]);
         runInputsAlgorithm3(reverseArray, k, DEFAULT_M, t2);
-        runningTimes.push_back(t);
+        runningTimes.push_back(t2);
         for (int j = 0; j < 10; j++) {
             RunningTime *t3 = new RunningTime;
             vector<int> random = generateRandomArray(sizeOfN[i]);
             runInputsAlgorithm3(random, k, DEFAULT_M, t3);
-            runningTimes.push_back(t);
+            runningTimes.push_back(t3);
         }
         averageTimes.push_back(calculateAverageTime(runningTimes));
     }
@@ -213,17 +265,18 @@ int main(int argc, const char * argv[]) {
         RunningTime *t2 = new RunningTime;
         vector<int> reverseArray = generateOrderedArrayReverse(sizeOfN[i]);
         runInputsAlgorithm4(reverseArray, k, DEFAULT_M, t2);
-        runningTimes.push_back(t);
+        runningTimes.push_back(t2);
         for (int j = 0; j < 10; j++) {
             RunningTime *t3 = new RunningTime;
             vector<int> random = generateRandomArray(sizeOfN[i]);
             runInputsAlgorithm4(random, k, DEFAULT_M, t3);
-            runningTimes.push_back(t);
+            runningTimes.push_back(t3);
         }
         averageTimes.push_back(calculateAverageTime(runningTimes));
     }
     
     runningTimes.clear();
+    //after all the averages have been calculated, write them to the file
     writeAveragesToFile(averageTimes);
     //testWrite();
     return 0;
@@ -248,7 +301,14 @@ void writeAveragesToFile(vector<AverageTime> averages) {
 
 }
 
-
+/**
+ *  Calculate the average time by taking the running times for each run, and adding it.
+ *  Then divide by the number of inputs
+ *
+ *  @param runningTimes All of the running times for certain input size
+ *
+ *  @return An average time for the given input
+ */
 AverageTime calculateAverageTime(vector<RunningTime *> runningTimes) {
     AverageTime averageTime;
     double average = 0;
@@ -260,6 +320,15 @@ AverageTime calculateAverageTime(vector<RunningTime *> runningTimes) {
     return averageTime;
 }
 
+/**
+ For each input running function...
+ *  Get the start time from the system clock
+ *  Run the selected algorithm M times
+ *  Get the end time from the system clock
+ *  Calculate the running time: cast the duration to nanoseconds and get the difference
+ *  Check if the running time is 0, and if it is then call the function again with a different M size
+ *  Otherwise, get the duration divided by M and back out
+ */
 void runInputsAlgorithm1(vector<int> testArray, int k, float m, RunningTime *t) {
     t->startTime = std::chrono::high_resolution_clock::now();
     for (int j = 0; j < m; j++) {
@@ -323,6 +392,9 @@ void runInputsAlgorithm4(vector<int> testArray, int k, float m, RunningTime *t) 
 }
 /**
  Generate an array of random numbers of size N
+ *  Create an array of a certain size
+ *  Generate a random number, and if it's not in the list then add it, otherwise
+ *  back out and create a new number
  */
 
 vector<int> generateRandomArray(int size) {
@@ -338,21 +410,11 @@ vector<int> generateRandomArray(int size) {
     return randomArray;
 }
 
-vector<int> generateDistinctArray(int size) {
-    vector<int> distinctValues = vector<int>(size, 0);
-    //Need to create the random array, but before a number is added
-    //we have to check to see if it already exists, and if so decrement i
-    for (int i = 0; i < distinctValues.size(); i++) {
-        int x = rand() % 1000;
-        if (find(distinctValues.begin(), distinctValues.end(), x) != distinctValues.end()) {
-            i--;
-            break;
-        }
-        distinctValues[i] = x;
-    }
-    return distinctValues;
-}
-
+/**
+ To generate an ordered array...
+ *  Create an array of the specific size
+ *  Add the elements, and return
+ */
 vector<int> generateOrderedArray(int size) {
     vector<int> orderedArray = vector<int>(size, 0);
     for (int i = 0; i < orderedArray.size(); i++) {
@@ -361,6 +423,11 @@ vector<int> generateOrderedArray(int size) {
     return orderedArray;
 }
 
+/**
+ To generate an ordered array in reverse
+ *  Generate an ordered array, and then reverse the array
+ *  return
+ */
 vector<int> generateOrderedArrayReverse(int size) {
     vector<int> orderedArray = generateOrderedArray(size);
     reverse(orderedArray.begin(), orderedArray.end());
@@ -368,7 +435,7 @@ vector<int> generateOrderedArrayReverse(int size) {
 }
 
 /**
- Get the results of running the first Algorithm
+ Algorithm 1
  */
 
 int selectKAlgorithm1(vector<int> distinctNumbers, int k) {
@@ -387,6 +454,9 @@ int selectKAlgorithm1(vector<int> distinctNumbers, int k) {
     return distinctNumbers[--k];
 }
 
+/**
+ Alorithm 2
+ */
 int selectKAlgorithm2(vector<int> numbers, int k) {
     int n = numbers.size();
     for (int i = 1; i <= k; i++) {
@@ -405,6 +475,9 @@ int selectKAlgorithm2(vector<int> numbers, int k) {
     return numbers[k - 1];
 }
 
+/**
+ Alogorithm 3
+ */
 int selectKAlgorithm3(vector<int> numbers, int k) {
     int n = numbers.size();
     vector<int> sortedNumbers = vector<int>(k);
@@ -433,6 +506,9 @@ int selectKAlgorithm3(vector<int> numbers, int k) {
     return sortedNumbers[min];
 }
 
+/**
+ Algorithm 4
+ */
 int selectKAlgorithm4(vector<int> distinctNumbers, int left, int right, int k) {
     int pivotIndex = rangeRandomAlg(left, right); //generate a random number such that left <= index <= right
     int newPivotIndex = partition(distinctNumbers, left, right, pivotIndex);
@@ -445,6 +521,9 @@ int selectKAlgorithm4(vector<int> distinctNumbers, int left, int right, int k) {
     }
 }
 
+/**
+ Partition used in Algorithm 4
+ */
 int partition(vector<int> &arrayToPartition, int left, int right, int pivotIndex) {
     int pivotValue = arrayToPartition[pivotIndex];
     swap(arrayToPartition[pivotIndex], arrayToPartition[right]);
@@ -459,6 +538,11 @@ int partition(vector<int> &arrayToPartition, int left, int right, int pivotIndex
     return storeIndex;
 }
 
+/**
+ This algorithm was used from the wonderful people at StackOverflow.
+ The source can be found here: http://stackoverflow.com/questions/11758809/what-is-the-optimal-algorithm-for-generating-an-unbiased-random-integer-within-a?answertab=votes#tab-top
+ It's design is such that it takes into account true randomness
+ */
 int rangeRandomAlg (int min, int max){
     int n = max - min + 1;
     int remainder = RAND_MAX % n;
